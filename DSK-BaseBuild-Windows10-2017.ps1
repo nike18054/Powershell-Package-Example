@@ -10,11 +10,11 @@ Set-ExecutionPolicy -ExecutionPolicy Bypass -Force
 Add-Type -AssemblyName PresentationFramework
 
 ## Variables
-$startlayout = 'startlayout.bin'
+$startlayout = '\\NETWORKPATH\startlayout.bin'
 $rootdirectory = 'C:\'
 $internetexplorer = 'C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Accessories\Internet Explorer.lnk'
 $startlayoutdirectory = 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Accessories'
-$sysprepscript = 'RunPriorToSysprep.ps1'
+$sysprepscript = '\\NETWORKPATH\RunPriorToSysprep.ps1'
 $sysprepdirectory = 'C:\Windows\System32\Sysprep'
 
 ## Copy and Paste
@@ -24,17 +24,17 @@ copy -Path $sysprepscript -Destination $sysprepdirectory
 
 ## Run Windows10-Initial-Setup.ps1
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Force
-& 'Windows10-Initial-Setup.ps1'
+& '\\NETWORKPATH\Windows10-Initial-Setup.ps1'
 
 ##removes any version of Office currently installed on the pc
-Start-Process 'O15CTRRemove.diagcab' -Wait
+Start-Process '\\NETWORKPATH\O15CTRRemove.diagcab' -Wait
 
 ##Installs base apps 
-Start-Process 'DSK-BUILD_AUTUM_2016.BAT' -Wait
+Start-Process '\\NETWORKPATH\DSK-BUILD_AUTUM_2016.BAT' -Wait
 
 ##Installs McAfee Agent
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Force
-& 'Install.ps1'
+& '\\NETWORKPATH\Install.ps1'
 
 ##If base app installation wasn't succesful prompt user for retry.
 if(!( (Test-Path 'C:\Program Files\7-Zip') -and (Test-Path 'C:\Program Files (x86)\Adobe') -and (Test-Path 'C:\Program Files\Microsoft Silverlight') -and (Test-Path 'C:\Program Files (x86)\K-Lite Codec Pack' ) )){
@@ -42,7 +42,7 @@ if(!( (Test-Path 'C:\Program Files\7-Zip') -and (Test-Path 'C:\Program Files (x8
     switch ($erroraction){
     'Yes' {
             rmdir "C:\LOGS\*" -ErrorAction SilentlyContinue
-            Start-Process '\\itres\deploy$\BUILD\DSK-BUILD_AUTUM_2016.BAT' -Wait
+            Start-Process '\\NETWORKPATH\DSK-BUILD_AUTUM_2016.BAT' -Wait
            }
 
     'No' {
